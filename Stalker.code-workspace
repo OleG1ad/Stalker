@@ -1,0 +1,852 @@
+{
+	"folders": [
+		{
+			"name": "Stalker",
+			"path": "."
+		},
+		{
+			"name": "UE5",
+			"path": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off",
+		"npm.autoDetect": "off"
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp",
+			"vadimcn.vscode-lldb",
+			"ms-vscode.mono-debug",
+			"dfarley1.file-picker"
+		]
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "Stalker Mac Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"Debug",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"Debug",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Stalker Mac Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"Debug",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"DebugGame",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"DebugGame",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Stalker Mac DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"DebugGame",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"Development",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"Development",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Stalker Mac Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"Development",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"Test",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"Test",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Stalker Mac Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"Test",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"Shipping",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"Shipping",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Stalker Mac Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker Mac Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"Mac",
+					"Shipping",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"Debug",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"Debug",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Stalker IOS Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"Debug",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"DebugGame",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"DebugGame",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Stalker IOS DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"DebugGame",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"Development",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"Development",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Stalker IOS Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"Development",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"Test",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"Test",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Stalker IOS Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"Test",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"Shipping",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"Shipping",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Stalker IOS Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "Stalker IOS Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"Stalker",
+					"IOS",
+					"Shipping",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "StalkerEditor Mac Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"StalkerEditor",
+					"Mac",
+					"Debug",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "StalkerEditor Mac Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"StalkerEditor",
+					"Mac",
+					"Debug",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"StalkerEditor Mac Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "StalkerEditor Mac Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"StalkerEditor",
+					"Mac",
+					"Debug",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "StalkerEditor Mac DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"StalkerEditor",
+					"Mac",
+					"DebugGame",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "StalkerEditor Mac DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"StalkerEditor",
+					"Mac",
+					"DebugGame",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"StalkerEditor Mac DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "StalkerEditor Mac DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"StalkerEditor",
+					"Mac",
+					"DebugGame",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "StalkerEditor Mac Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"StalkerEditor",
+					"Mac",
+					"Development",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "StalkerEditor Mac Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"StalkerEditor",
+					"Mac",
+					"Development",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"StalkerEditor Mac Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			},
+			{
+				"label": "StalkerEditor Mac Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+				"args": [
+					"StalkerEditor",
+					"Mac",
+					"Development",
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+				}
+			}
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Launch Stalker (Debug)",
+				"request": "launch",
+				"program": "/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Binaries/Mac/UnrealGame-Mac-Debug.app/Contents/MacOS/UnrealGame-Mac-Debug",
+				"preLaunchTask": "Stalker Mac Debug Build",
+				"args": [
+				],
+				"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3",
+				"type": "lldb"
+			},
+			{
+				"name": "Launch Stalker (DebugGame)",
+				"request": "launch",
+				"program": "/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Binaries/Mac/UnrealGame-Mac-DebugGame.app/Contents/MacOS/UnrealGame-Mac-DebugGame",
+				"preLaunchTask": "Stalker Mac DebugGame Build",
+				"args": [
+				],
+				"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3",
+				"type": "lldb"
+			},
+			{
+				"name": "Launch Stalker (Development)",
+				"request": "launch",
+				"program": "/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Binaries/Mac/UnrealGame.app/Contents/MacOS/UnrealGame",
+				"preLaunchTask": "Stalker Mac Development Build",
+				"args": [
+				],
+				"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3",
+				"type": "lldb"
+			},
+			{
+				"name": "Launch Stalker (Test)",
+				"request": "launch",
+				"program": "/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Binaries/Mac/UnrealGame-Mac-Test.app/Contents/MacOS/UnrealGame-Mac-Test",
+				"preLaunchTask": "Stalker Mac Test Build",
+				"args": [
+				],
+				"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3",
+				"type": "lldb"
+			},
+			{
+				"name": "Launch Stalker (Shipping)",
+				"request": "launch",
+				"program": "/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Binaries/Mac/UnrealGame-Mac-Shipping.app/Contents/MacOS/UnrealGame-Mac-Shipping",
+				"preLaunchTask": "Stalker Mac Shipping Build",
+				"args": [
+				],
+				"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3",
+				"type": "lldb"
+			},
+			{
+				"name": "Launch StalkerEditor (Debug)",
+				"request": "launch",
+				"program": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3/Engine/Binaries/Mac/UnrealEditor-Mac-Debug.app/Contents/MacOS/UnrealEditor-Mac-Debug",
+				"preLaunchTask": "StalkerEditor Mac Debug Build",
+				"args": [
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject"
+				],
+				"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3",
+				"type": "lldb"
+			},
+			{
+				"name": "Launch StalkerEditor (DebugGame)",
+				"request": "launch",
+				"program": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3/Engine/Binaries/Mac/UnrealEditor-Mac-DebugGame.app/Contents/MacOS/UnrealEditor-Mac-DebugGame",
+				"preLaunchTask": "StalkerEditor Mac DebugGame Build",
+				"args": [
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject"
+				],
+				"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3",
+				"type": "lldb"
+			},
+			{
+				"name": "Launch StalkerEditor (Development)",
+				"request": "launch",
+				"program": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+				"preLaunchTask": "StalkerEditor Mac Development Build",
+				"args": [
+					"/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject"
+				],
+				"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3",
+				"type": "lldb"
+			},
+			{
+				"name": "Generate Project Files",
+				"type": "coreclr",
+				"request": "launch",
+				"preLaunchTask": "UnrealBuildTool Mac Development Build",
+				"program": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3/Engine/Build/BatchFiles/RunUBT.bat",
+				"args": [
+					"-projectfiles",
+					"-vscode",
+					"-project=/Volumes/Windows_P40/Dev/UE_5_3/Stalker/Stalker.uproject",
+					"-game",
+					"-engine",
+					"-dotnet"
+				],
+				"console": "internalConsole",
+				"internalConsoleOptions": "openOnSessionStart",
+				"stopAtEntry": false,
+				"cwd": "/Volumes/iOS_WD_P40/Users/Shared/Epic Games/UE_5.3"
+			}
+		]
+	}
+}

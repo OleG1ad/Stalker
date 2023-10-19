@@ -5,14 +5,17 @@
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "InputActionValue.h"
+#include "Engine/LocalPlayer.h"
 
+DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
-//////////////////////////////////////////////////////////////////////////
-// AStalkerCharacter
-
-AStalkerCharacter::AStalkerCharacter()
+// AStalker_Character
+//------------------------------------------------------------------------------------------------------------
+AStalker_Character::AStalker_Character()
 {
 	// Character doesnt have a rifle at start
 	bHasRifle = false;
@@ -36,13 +39,24 @@ AStalkerCharacter::AStalkerCharacter()
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
 }
+//------------------------------------------------------------------------------------------------------------
+USkeletalMeshComponent *AStalker_Character::GetMesh1P() const 
+{ 
+	return Mesh1P; 
+}
+//------------------------------------------------------------------------------------------------------------
+UCameraComponent *AStalker_Character::GetFirstPersonCameraComponent() const 
+{ 
+	return FirstPersonCameraComponent; 
+}
+//------------------------------------------------------------------------------------------------------------
 
-void AStalkerCharacter::BeginPlay()
+void AStalker_Character::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
 
-	//Add Input Mapping Context
+	// Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
@@ -53,27 +67,31 @@ void AStalkerCharacter::BeginPlay()
 
 }
 
-//////////////////////////////////////////////////////////////////////////// Input
+//------------------------------------------------------------------------------------------------------------
 
-void AStalkerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
+void AStalker_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
+	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		//Jumping
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
+		// Jumping
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
-		//Moving
-		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AStalkerCharacter::Move);
+		// Moving
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AStalker_Character::Move);
 
-		//Looking
-		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AStalkerCharacter::Look);
+		// Looking
+		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AStalker_Character::Look);
+	}
+	else
+	{
+		UE_LOG(LogTemplateCharacter, Error, TEXT("'%s' Failed to find an Enhanced Input Component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	}
 }
 
-
-void AStalkerCharacter::Move(const FInputActionValue& Value)
+//------------------------------------------------------------------------------------------------------------
+void AStalker_Character::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
@@ -85,8 +103,8 @@ void AStalkerCharacter::Move(const FInputActionValue& Value)
 		AddMovementInput(GetActorRightVector(), MovementVector.X);
 	}
 }
-
-void AStalkerCharacter::Look(const FInputActionValue& Value)
+//------------------------------------------------------------------------------------------------------------
+void AStalker_Character::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
@@ -98,13 +116,14 @@ void AStalkerCharacter::Look(const FInputActionValue& Value)
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
 }
-
-void AStalkerCharacter::SetHasRifle(bool bNewHasRifle)
+//------------------------------------------------------------------------------------------------------------
+void AStalker_Character::SetHasRifle(bool bNewHasRifle)
 {
 	bHasRifle = bNewHasRifle;
 }
-
-bool AStalkerCharacter::GetHasRifle()
+//------------------------------------------------------------------------------------------------------------
+bool AStalker_Character::GetHasRifle()
 {
 	return bHasRifle;
 }
+//------------------------------------------------------------------------------------------------------------
