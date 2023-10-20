@@ -1,6 +1,6 @@
 
 #include "Stalker_Game_Mode.h"
-#include "StalkerCharacter.h"
+#include "Stalker_Character.h"
 #include "UObject/ConstructorHelpers.h"
 //------------------------------------------------------------------------------------------------------------
 AStalker_Game_Mode::AStalker_Game_Mode()

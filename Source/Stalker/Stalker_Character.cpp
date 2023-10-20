@@ -1,6 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "StalkerCharacter.h"
+#include "Stalker_Character.h"
 #include "StalkerProjectile.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
@@ -18,70 +18,54 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 AStalker_Character::AStalker_Character()
 {
 	// Character doesnt have a rifle at start
-	bHasRifle = false;
+	Has_Rifle = false;
 	
 	// Set size for collision capsule
-	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
+	GetCapsuleComponent()->InitCapsuleSize(55.0f, 96.0f);
 		
 	// Create a CameraComponent	
 	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
 	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());
-	FirstPersonCameraComponent->SetRelativeLocation(FVector(-10.f, 0.f, 60.f)); // Position the camera
+	FirstPersonCameraComponent->SetRelativeLocation(FVector(-10.0f, 0.0f, 60.0f)); // Position the camera
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
 
 	// Create a mesh component that will be used when being viewed from a '1st person' view (when controlling this pawn)
-	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
-	Mesh1P->SetOnlyOwnerSee(true);
-	Mesh1P->SetupAttachment(FirstPersonCameraComponent);
-	Mesh1P->bCastDynamicShadow = false;
-	Mesh1P->CastShadow = false;
+	Mesh_1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
+	Mesh_1P->SetOnlyOwnerSee(true);
+	Mesh_1P->SetupAttachment(FirstPersonCameraComponent);
+	Mesh_1P->bCastDynamicShadow = false;
+	Mesh_1P->CastShadow = false;
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
-	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
+	Mesh_1P->SetRelativeLocation(FVector(-30.0f, 0.0f, -150.0f));
 
 }
 //------------------------------------------------------------------------------------------------------------
-USkeletalMeshComponent *AStalker_Character::GetMesh1P() const 
-{ 
-	return Mesh1P; 
-}
+// USkeletalMeshComponent *AStalker_Character::Get_Mesh_1P() const 
+// { 
+// 	return Mesh_1P; 
+// }
 //------------------------------------------------------------------------------------------------------------
-UCameraComponent *AStalker_Character::GetFirstPersonCameraComponent() const 
-{ 
-	return FirstPersonCameraComponent; 
-}
-//------------------------------------------------------------------------------------------------------------
-
 void AStalker_Character::BeginPlay()
 {
-	// Call the base class  
-	Super::BeginPlay();
+	Super::BeginPlay(); // Call the base class  
 
 	// Add Input Mapping Context
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	if (APlayerController *player_controller = Cast<APlayerController>(Controller))
 	{
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-		{
-			Subsystem->AddMappingContext(DefaultMappingContext, 0);
-		}
+		if (UEnhancedInputLocalPlayerSubsystem *input_subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(player_controller->GetLocalPlayer()))
+			input_subsystem->AddMappingContext(DefaultMappingContext, 0);
 	}
-
 }
-
 //------------------------------------------------------------------------------------------------------------
 
-void AStalker_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AStalker_Character::SetupPlayerInputComponent(UInputComponent *player_input_component)
 {
 	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(player_input_component))
 	{
-		// Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-
-		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AStalker_Character::Move);
-
-		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AStalker_Character::Look);
 	}
 	else
@@ -91,39 +75,29 @@ void AStalker_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 }
 
 //------------------------------------------------------------------------------------------------------------
-void AStalker_Character::Move(const FInputActionValue& Value)
+void AStalker_Character::Move(const FInputActionValue &value)
 {
 	// input is a Vector2D
-	FVector2D MovementVector = Value.Get<FVector2D>();
+	FVector2D movement_vector = value.Get<FVector2D>();
 
 	if (Controller != nullptr)
-	{
-		// add movement 
-		AddMovementInput(GetActorForwardVector(), MovementVector.Y);
-		AddMovementInput(GetActorRightVector(), MovementVector.X);
+	{// add movement 
+		
+		AddMovementInput(GetActorForwardVector(), movement_vector.Y);
+		AddMovementInput(GetActorRightVector(), movement_vector.X);
 	}
 }
 //------------------------------------------------------------------------------------------------------------
-void AStalker_Character::Look(const FInputActionValue& Value)
+void AStalker_Character::Look(const FInputActionValue &value)
 {
 	// input is a Vector2D
-	FVector2D LookAxisVector = Value.Get<FVector2D>();
+	FVector2D look_axis_vector = value.Get<FVector2D>();
 
 	if (Controller != nullptr)
-	{
-		// add yaw and pitch input to controller
-		AddControllerYawInput(LookAxisVector.X);
-		AddControllerPitchInput(LookAxisVector.Y);
+	{// add yaw and pitch input to controller
+		
+		AddControllerYawInput(look_axis_vector.X);
+		AddControllerPitchInput(look_axis_vector.Y);
 	}
-}
-//------------------------------------------------------------------------------------------------------------
-void AStalker_Character::SetHasRifle(bool bNewHasRifle)
-{
-	bHasRifle = bNewHasRifle;
-}
-//------------------------------------------------------------------------------------------------------------
-bool AStalker_Character::GetHasRifle()
-{
-	return bHasRifle;
 }
 //------------------------------------------------------------------------------------------------------------
