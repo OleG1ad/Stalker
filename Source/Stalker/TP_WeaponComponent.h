@@ -16,7 +16,7 @@ class STALKER_API UTP_WeaponComponent : public USkeletalMeshComponent
 public:
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
-	TSubclassOf<class AStalkerProjectile> ProjectileClass;
+	TSubclassOf<class AStalker_Projectile> ProjectileClass;
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)

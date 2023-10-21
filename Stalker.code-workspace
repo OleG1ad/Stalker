@@ -11,8 +11,7 @@
 	],
 	"settings": {
 		"typescript.tsc.autoDetect": "off",
-		"npm.autoDetect": "off",
-		"dotnet.defaultSolution": "UE5/Engine/Source/Programs/UnrealBuildTool/UnrealBuildTool.sln"
+		"npm.autoDetect": "off"
 	},
 	"extensions": {
 		"recommendations": [
