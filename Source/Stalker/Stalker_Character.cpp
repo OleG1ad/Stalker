@@ -1,5 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "Stalker_Character.h"
 #include "Stalker_Projectile.h"
 #include "AWeapon.h"
@@ -14,17 +12,14 @@
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
-// AStalker_Character
 //------------------------------------------------------------------------------------------------------------
 AStalker_Character::AStalker_Character()
 {
-	// Character doesnt have a rifle at start
-	Has_Rifle = false;
-	
-	// Set size for collision capsule
-	GetCapsuleComponent()->InitCapsuleSize(55.0f, 96.0f);
-		
-	// Create a CameraComponent	
+	Has_Rifle = false; // Character doesnt have a rifle at start
+
+	GetCapsuleComponent()->InitCapsuleSize(55.0f, 96.0f); // Set size for collision capsule
+
+	// Create a CameraComponent
 	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
 	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());
 	FirstPersonCameraComponent->SetRelativeLocation(FVector(-10.0f, 0.0f, 60.0f)); // Position the camera
@@ -36,30 +31,13 @@ AStalker_Character::AStalker_Character()
 	Mesh_1P->SetupAttachment(FirstPersonCameraComponent);
 	Mesh_1P->bCastDynamicShadow = false;
 	Mesh_1P->CastShadow = false;
-	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
+	// Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh_1P->SetRelativeLocation(FVector(-30.0f, 0.0f, -150.0f));
-}
-//------------------------------------------------------------------------------------------------------------
-void AStalker_Character::Pickup_Weapon(AWeapon *weapon)
-{
-	// Check that the character is valid, and has no rifle yet
-	if (weapon == 0 || Has_Rifle)
-		return;
-
-	if (Current_Weapon != 0)
-	Current_Weapon->Detach();
-
-	Current_Weapon = weapon;
-	// Attach the weapon to the First Person Character
-	FAttachmentTransformRules attachment_rules(EAttachmentRule::SnapToTarget, true);
-	AttachToComponent(Mesh_1P, attachment_rules, FName(TEXT("GripPoint")));
-	
-	Has_Rifle = true; 	// switch Has_Rifle so the animation blueprint can switch to another animation set
 }
 //------------------------------------------------------------------------------------------------------------
 void AStalker_Character::BeginPlay()
 {
-	Super::BeginPlay(); // Call the base class  
+	Super::BeginPlay(); // Call the base class
 
 	// Add Input Mapping Context
 	if (APlayerController *player_controller = Cast<APlayerController>(Controller))
@@ -72,7 +50,7 @@ void AStalker_Character::BeginPlay()
 void AStalker_Character::SetupPlayerInputComponent(UInputComponent *player_input_component)
 {
 	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(player_input_component))
+	if (UEnhancedInputComponent *EnhancedInputComponent = Cast<UEnhancedInputComponent>(player_input_component))
 	{
 		EnhancedInputComponent->BindAction(Action_Jump, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(Action_Jump, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
@@ -93,8 +71,8 @@ void AStalker_Character::On_Action_Move(const FInputActionValue &value)
 	FVector2D movement_vector = value.Get<FVector2D>();
 
 	if (Controller != nullptr)
-	{// add movement 
-		
+	{ // add movement
+
 		AddMovementInput(GetActorForwardVector(), movement_vector.Y);
 		AddMovementInput(GetActorRightVector(), movement_vector.X);
 	}
@@ -106,8 +84,8 @@ void AStalker_Character::On_Action_Look(const FInputActionValue &value)
 	FVector2D look_axis_vector = value.Get<FVector2D>();
 
 	if (Controller != nullptr)
-	{// add yaw and pitch input to controller
-		
+	{ // add yaw and pitch input to controller
+
 		AddControllerYawInput(look_axis_vector.X);
 		AddControllerPitchInput(look_axis_vector.Y);
 	}
@@ -117,12 +95,60 @@ void AStalker_Character::On_Action_Fire(const FInputActionValue &value)
 {
 	if (Current_Weapon != 0)
 		Current_Weapon->Fire(this);
-		UE_LOG(LogTemp, Display, TEXT("On_Action_Fire Pressed _LMB_"));
+	UE_LOG(LogTemp, Display, TEXT("On_Action_Fire Pressed _LMB_"));
 }
 //------------------------------------------------------------------------------------------------------------
 void AStalker_Character::On_Action_Use(const FInputActionValue &value)
 {
-	int yy = 0;
-	UE_LOG(LogTemp, Display, TEXT("On_Action_Use Pressed _F_"));
+	int i;
+	double distance, min_distance;
+	AActor *item, *curr_item;
+	FVector player_pos, item_pos;
+
+	// UE_LOG(LogTemp, Display, TEXT("On_Action_Use Pressed _F_"));
+	if (Interactable_Actors.Num() == 0)
+		return;
+
+	if (Interactable_Actors.Num() == 1)
+	{
+		item = Interactable_Actors[0];
+		Interactable_Actors.RemoveAt(0);
+	}
+	else
+	{
+		player_pos = GetActorLocation();
+
+		for (i = 0; i < Interactable_Actors.Num(); i++)
+		{
+			curr_item = Interactable_Actors[i];
+			item_pos = curr_item->GetActorLocation();
+			distance = FVector::Distance(player_pos, item_pos);
+
+			if (i == 0 || min_distance)
+			{
+				min_distance = distance;
+				item = curr_item;
+			}
+		}
+		Interactable_Actors.Remove(item);
+	}
+
+	if (AWeapon *weapon = Cast<AWeapon>(item))
+		Pickup_Weapon(weapon);
+}
+//------------------------------------------------------------------------------------------------------------
+void AStalker_Character::Pickup_Weapon(AWeapon *weapon)
+{
+	// Check that the character is valid, and has no rifle yet
+	if (weapon == 0)
+		return;
+
+	if (Current_Weapon != 0)
+		Current_Weapon->Detach();
+
+	Current_Weapon = weapon;
+	Current_Weapon->Attach(Mesh_1P);
+
+	Has_Rifle = true; // switch Has_Rifle so the animation blueprint can switch to another animation set
 }
 //------------------------------------------------------------------------------------------------------------

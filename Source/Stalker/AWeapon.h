@@ -14,6 +14,7 @@ class STALKER_API AWeapon : public AActor
 public:	
 	AWeapon();
 
+	void Attach(USkeletalMeshComponent *arms_mesh);
 	void Detach();
 
 	UFUNCTION(BlueprintCallable, Category="Weapon") void Fire(AStalker_Character *character); // Make the weapon Fire a Projectile

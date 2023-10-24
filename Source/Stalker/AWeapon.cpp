@@ -8,9 +8,32 @@ AWeapon::AWeapon()
 
 }
 //------------------------------------------------------------------------------------------------------------
+void AWeapon::Attach(USkeletalMeshComponent *arms_mesh)
+{
+	USceneComponent *root_component = GetRootComponent();
+
+	if (UPrimitiveComponent *prim_component = Cast<UPrimitiveComponent>(root_component))
+	{
+		prim_component->SetSimulatePhysics(false);
+		prim_component->SetCollisionProfileName(UCollisionProfile::NoCollision_ProfileName);
+	}
+	
+	// Attach the weapon to the First Person Character
+	FAttachmentTransformRules attachment_rules(EAttachmentRule::SnapToTarget, true);
+	AttachToComponent(arms_mesh, attachment_rules, FName(TEXT("GripPoint")));
+}
+//------------------------------------------------------------------------------------------------------------
 void AWeapon::Detach()
 {
-	//
+	USceneComponent *root_component = GetRootComponent();
+	
+	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+
+	if (UPrimitiveComponent *prim_component = Cast<UPrimitiveComponent>(root_component))
+	{
+		prim_component->SetSimulatePhysics(true);
+		prim_component->SetCollisionProfileName(UCollisionProfile::PhysicsActor_ProfileName);
+	}
 }
 //------------------------------------------------------------------------------------------------------------
 void AWeapon::Fire(AStalker_Character *character)
@@ -26,7 +49,7 @@ void AWeapon::Fire(AStalker_Character *character)
 			APlayerController* player_controller = Cast<APlayerController>(character->GetController());
 			FRotator spawn_rotation = player_controller->PlayerCameraManager->GetCameraRotation();
 			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-			FVector spawn_location = GetOwner()->GetActorLocation() + spawn_rotation.RotateVector(Muzzle_Offset);
+			FVector spawn_location = GetActorLocation() + spawn_rotation.RotateVector(Muzzle_Offset);
 	
 			//Set Spawn Collision Handling Override
 			FActorSpawnParameters ActorSpawnParams;

@@ -25,8 +25,6 @@ class AStalker_Character : public ACharacter
 
 public:
 	AStalker_Character();
-
-	UFUNCTION(BlueprintCallable) void Pickup_Weapon(AWeapon *weapon); //Attaches the actor to a FirstPersonCharacter
 	
 	// USkeletalMeshComponent *Get_Mesh_1P() const;
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh) USkeletalMeshComponent *Mesh_1P; 	/** Pawn mesh: 1st person view (arms; seen only by self) */
@@ -38,11 +36,15 @@ protected:
 	virtual void BeginPlay();
 	virtual void SetupPlayerInputComponent(UInputComponent *input_component);
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) TArray<AActor *> Interactable_Actors; //Items that player can interactable
+	
 private:
 	void On_Action_Move(const FInputActionValue &value); /** Called for movement input */
 	void On_Action_Look(const FInputActionValue &value); /** Called for looking input */
 	void On_Action_Fire(const FInputActionValue &value);
 	void On_Action_Use(const FInputActionValue &value);
+
+	void Pickup_Weapon(AWeapon *weapon); //Attaches the actor to a FirstPersonCharacter
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true")) UCameraComponent *FirstPersonCameraComponent;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true")) UInputMappingContext *DefaultMappingContext;
