@@ -1,4 +1,5 @@
 #include "AWeapon.h"
+#include "Engine/SkeletalMeshSocket.h"
 #include "Kismet/GameplayStatics.h"
 
 //------------------------------------------------------------------------------------------------------------
@@ -36,6 +37,27 @@ void AWeapon::Detach()
 	}
 }
 //------------------------------------------------------------------------------------------------------------
+void AWeapon::Attach_To_Socket(USkeletalMeshComponent *character_mesh, FName arm_socket_name)
+{
+	USceneComponent *root_component = GetRootComponent();
+
+	if (UPrimitiveComponent *prim_component = Cast<UPrimitiveComponent>(root_component))
+	{
+		prim_component->SetSimulatePhysics(false);
+		prim_component->SetCollisionProfileName(UCollisionProfile::NoCollision_ProfileName);
+	}
+	
+	// Attach the weapon to the First Person Character
+	// FAttachmentTransformRules attachment_rules(EAttachmentRule::SnapToTarget, true);
+	// AttachToComponent(character_mesh, attachment_rules, arm_socket_name);
+
+	if (const USkeletalMeshSocket *weapon_socket = character_mesh->GetSocketByName(arm_socket_name))
+		weapon_socket->AttachActor(this, character_mesh);
+	else
+		UE_LOG(LogTemp, Warning, TEXT("[%S] >>>>> Missing socket: %s"), __FUNCTION__, *(arm_socket_name.ToString()));
+
+}
+//------------------------------------------------------------------------------------------------------------
 void AWeapon::Fire(AStalker_Character *character)
 {
 	if (character == 0 || character->GetController() == 0)
@@ -71,6 +93,14 @@ void AWeapon::Fire(AStalker_Character *character)
 		UAnimInstance* anim_instance = character->Mesh_1P->GetAnimInstance();
 		if (anim_instance != 0)
 			anim_instance->Montage_Play(Fire_Animation, 1.f);
+	}
+}
+//------------------------------------------------------------------------------------------------------------
+void AWeapon::Fire_NPC()
+{
+	if (Fire_Animation !=0)
+	{
+	BP_Weapon_Mesh_Component->PlayAnimation(Fire_Animation, false);
 	}
 }
 //------------------------------------------------------------------------------------------------------------
